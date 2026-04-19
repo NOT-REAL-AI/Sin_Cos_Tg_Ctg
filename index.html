@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>ДОНБАСС · АУРА · ТРИГОНОМЕТРИЯ</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Montserrat', system-ui, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 20% 30%, #0b0d1e, #020108);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Аура эффекты — разноцветные размытые пятна */
+    body::before {
+      content: "";
+      position: absolute;
+      width: 80vw;
+      height: 80vw;
+      max-width: 900px;
+      max-height: 900px;
+      background: radial-gradient(circle, rgba(255, 0, 150, 0.25) 0%, rgba(0, 200, 255, 0.15) 50%, transparent 80%);
+      filter: blur(120px);
+      top: -10%;
+      left: -10%;
+      z-index: 0;
+      animation: auraFloat1 16s infinite alternate ease-in-out;
+    }
+
+    body::after {
+      content: "";
+      position: absolute;
+      width: 70vw;
+      height: 70vw;
+      max-width: 800px;
+      max-height: 800px;
+      background: radial-gradient(circle, rgba(0, 255, 200, 0.2) 0%, rgba(150, 0, 255, 0.25) 60%, transparent 90%);
+      filter: blur(130px);
+      bottom: -5%;
+      right: -5%;
+      z-index: 0;
+      animation: auraFloat2 20s infinite alternate ease-in-out;
+    }
+
+    @keyframes auraFloat1 {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+      100% { transform: translate(8%, 6%) scale(1.2); opacity: 1; }
+    }
+    @keyframes auraFloat2 {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+      100% { transform: translate(-5%, -8%) scale(1.3); opacity: 0.9; }
+    }
+
+    .calculator {
+      position: relative;
+      z-index: 10;
+      max-width: 800px;
+      width: 100%;
+      background: rgba(5, 7, 19, 0.65);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255, 215, 255, 0.25);
+      border-radius: 48px;
+      padding: 30px 28px 36px;
+      box-shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 255, 255, 0.1) inset, 0 0 30px rgba(180, 0, 255, 0.3);
+      transition: box-shadow 0.3s;
+    }
+
+    .calculator:hover {
+      box-shadow: 0 30px 60px -5px black, 0 0 0 1.5px rgba(210, 180, 255, 0.4) inset, 0 0 50px #a05eff55;
+    }
+
+    /* Заголовок в стиле Донбасс + аура */
+    .title-block {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .glow-title {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffe99c, #ffd0b0, #c5b4ff, #9eeafb, #b0ffcf);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 18px #ff66c0, 0 0 35px #4ad0ff;
+      filter: drop-shadow(0 4px 6px #00000050);
+      word-break: break-word;
+    }
+
+    .subaura {
+      color: #cdd9ff;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 8px;
+      font-size: 0.9rem;
+      margin-top: 6px;
+      text-shadow: 0 0 10px cyan;
+      opacity: 0.9;
+    }
+
+    /* селекторы и инпуты — массивные, аккуратные */
+    .selector-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px 18px;
+      margin-bottom: 28px;
+      justify-content: center;
+    }
+
+    .select-wrapper {
+      flex: 1 1 200px;
+      min-width: 170px;
+    }
+
+    .label-icon {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #b7c9ff;
+      margin-bottom: 8px;
+      text-shadow: 0 0 8px #00c8ff;
+    }
+
+    .neo-select, .neo-input {
+      width: 100%;
+      background: rgba(12, 15, 30, 0.8);
+      border: 1.5px solid rgba(150, 200, 255, 0.5);
+      border-radius: 40px;
+      padding: 14px 20px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #f0f4ff;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 12px #00000030, 0 0 10px #3f9eff33 inset;
+      transition: all 0.2s;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .neo-input {
+      cursor: text;
+    }
+
+    .neo-select option {
+      background: #0f1225;
+      color: #eef3ff;
+      font-weight: 500;
+    }
+
+    .neo-select:hover, .neo-input:hover {
+      border-color: #b77eff;
+      box-shadow: 0 0 18px #a570ff, 0 6px 12px #000;
+    }
+
+    .neo-select:focus, .neo-input:focus {
+      border-color: #ffb0f0;
+      box-shadow: 0 0 24px #ff96e0, 0 0 8px #b8a2ff inset;
+    }
+
+    /* блок значения */
+    .value-block {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .value-input-area {
+      flex: 3 1 220px;
+    }
+
+    /* четверть — кнопки с аурой */
+    .quarter-section {
+      margin: 20px 0 26px;
+    }
+
+    .quarter-title {
+      color: #c6d0ff;
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-shadow: 0 0 8px magenta;
+    }
+
+    .quarter-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .quarter-btn {
+      background: rgba(20, 20, 45, 0.7);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid #4f5a9e;
+      border-radius: 60px;
+      padding: 16px 5px;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #e1e6ff;
+      text-shadow: 0 0 10px #80c0ff;
+      box-shadow: 0 8px 0 #0a0c1a, 0 4px 18px #00000080, 0 0 12px #3f7bff55 inset;
+      transition: all 0.15s;
+      cursor: pointer;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+
+    .quarter-btn.active {
+      background: linear-gradient(145deg, #4343b0, #1f1f66);
+      border-color: #ffdb9e;
+      box-shadow: 0 0 25px #fa9eff, 0 0 12px #00ffff, 0 4px 0 #191c30;
+      color: white;
+      transform: scale(1.02);
+      text-shadow: 0 0 20px white;
+    }
+
+    .quarter-btn:hover {
+      background: #2e3170;
+      border-color: #c8adff;
+      box-shadow: 0 0 22px #b77aff;
+    }
+
+    /* кнопка расчёта */
+    .calc-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #ae6eff, #3a86ff);
+      border: none;
+      border-radius: 60px;
+      padding: 18px 10px;
+      font-size: 1.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 8px;
+      color: #ffffff;
+      text-shadow: 0 2px 10px black;
+      box-shadow: 0 16px 0 #1a1e3a, 0 8px 30px #000000b0, 0 0 30px #be7cff;
+      margin: 16px 0 24px;
+      cursor: pointer;
+      transition: 0.08s linear;
+      border: 1px solid #ffd0f0aa;
+    }
+
+    .calc-btn:active {
+      transform: translateY(8px);
+      box-shadow: 0 8px 0 #12162e, 0 8px 25px #000, 0 0 40px #ffa0e0;
+    }
+
+    /* Результаты — таблица аккуратная */
+    .results-panel {
+      background: rgba(0, 5, 20, 0.5);
+      backdrop-filter: blur(8px);
+      border-radius: 40px;
+      padding: 24px 22px;
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 30px #001aff1a, inset 0 0 15px #3e3eb0;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px 22px;
+    }
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1.5px dashed #5d71b9;
+      padding-bottom: 8px;
+    }
+
+    .func-name {
+      font-size: 1.7rem;
+      font-weight: 700;
+      background: linear-gradient(145deg, #ffe6b0, #cbb2ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 15px #fea3ff;
+    }
+
+    .func-value {
+      font-size: 2rem;
+      font-weight: 800;
+      font-family: 'Courier New', monospace;
+      color: #ffffff;
+      text-shadow: 0 0 20px #3effe6, 0 0 5px black;
+      letter-spacing: 2px;
+      word-break: break-word;
+      text-align: right;
+    }
+
+    .error-message {
+      color: #ffb0b0;
+      background: #2f0033aa;
+      border-radius: 30px;
+      padding: 10px 18px;
+      margin-top: 16px;
+      font-weight: 500;
+      backdrop-filter: blur(5px);
+      border-left: 8px solid #ff5060;
+    }
+
+    .info-note {
+      color: #adc8ff;
+      font-size: 0.9rem;
+      margin-top: 12px;
+      text-align: right;
+      opacity: 0.8;
+    }
+
+    .donbass-signature {
+      margin-top: 28px;
+      text-align: center;
+      color: #a3abdd;
+      font-weight: 300;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="calculator">
+  <div class="title-block">
+    <div class="glow-title">⚡ ДОНБАСС ⚡</div>
+    <div class="subaura">тригонометрическая аура</div>
+  </div>
+
+  <!-- ВЫБОР ФУНКЦИИ (что известно) -->
+  <div class="selector-group">
+    <div class="select-wrapper">
+      <span class="label-icon">🌀 ИЗВЕСТНАЯ ФУНКЦИЯ</span>
+      <select id="funcSelect" class="neo-select">
+        <option value="sin" selected>sin α · синус</option>
+        <option value="cos">cos α · косинус</option>
+        <option value="tan">tg α · тангенс</option>
+        <option value="cot">ctg α · котангенс</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ВВОД ЗНАЧЕНИЯ -->
+  <div class="value-block">
+    <div class="value-input-area">
+      <span class="label-icon">💎 ЗНАЧЕНИЕ</span>
+      <input type="number" id="funcValue" class="neo-input" placeholder="например 0.5" value="0.5" step="any">
+    </div>
+  </div>
+
+  <!-- ВЫБОР ЧЕТВЕРТИ (аккуратные кнопки, много четвертей — все 4) -->
+  <div class="quarter-section">
+    <div class="quarter-title">
+      <span>🧿 ЧЕТВЕРТЬ УГЛА α</span>
+      <span style="font-size:0.8rem; opacity:0.7;">(I · II · III · IV)</span>
+    </div>
+    <div class="quarter-grid">
+      <div class="quarter-btn active" data-quarter="1">Ⅰ</div>
+      <div class="quarter-btn" data-quarter="2">Ⅱ</div>
+      <div class="quarter-btn" data-quarter="3">Ⅲ</div>
+      <div class="quarter-btn" data-quarter="4">Ⅳ</div>
+    </div>
+  </div>
+
+  <!-- КНОПКА РАСЧЁТА (огромный спер :) -->
+  <button class="calc-btn" id="calculateBtn">ВЫЧИСЛИТЬ</button>
+
+  <!-- РЕЗУЛЬТАТЫ -->
+  <div class="results-panel">
+    <div class="result-grid">
+      <div class="result-item"><span class="func-name">sin α</span><span class="func-value" id="resSin">—</span></div>
+      <div class="result-item"><span class="func-name">cos α</span><span class="func-value" id="resCos">—</span></div>
+      <div class="result-item"><span class="func-name">tg α</span><span class="func-value" id="resTan">—</span></div>
+      <div class="result-item"><span class="func-name">ctg α</span><span class="func-value" id="resCot">—</span></div>
+    </div>
+    <div id="errorMsg" class="error-message"></div>
+    <div class="info-note">✦ зная одну — получаем остальные ✦</div>
+  </div>
+
+  <div class="donbass-signature">ДОНБАСС · АУРА · 2026</div>
+</div>
+
+<script>
+  (function(){
+    "use strict";
+
+    // DOM элементы
+    const funcSelect = document.getElementById('funcSelect');
+    const valueInput = document.getElementById('funcValue');
+    const quarterBtns = document.querySelectorAll('.quarter-btn');
+    const calcBtn = document.getElementById('calculateBtn');
+
+    const resSin = document.getElementById('resSin');
+    const resCos = document.getElementById('resCos');
+    const resTan = document.getElementById('resTan');
+    const resCot = document.getElementById('resCot');
+    const errorMsgDiv = document.getElementById('errorMsg');
+
+    // текущая выбранная четверть (1,2,3,4)
+    let currentQuarter = 1;
+
+    // ---------- управление четвертями (активный класс) ----------
+    function setActiveQuarter(quarter) {
+      quarterBtns.forEach(btn => {
+        const q = parseInt(btn.getAttribute('data-quarter'), 10);
+        if (q === quarter) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      currentQuarter = quarter;
+    }
+
+    quarterBtns.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const q = parseInt(this.getAttribute('data-quarter'), 10);
+        setActiveQuarter(q);
+      });
+    });
+
+    // ---------- знаки функций по четвертям ----------
+    function getSigns(quarter) {
+      // sin, cos, tan, cot
+      if (quarter === 1) return { sin: 1, cos: 1, tan: 1, cot: 1 };
+      if (quarter === 2) return { sin: 1, cos: -1, tan: -1, cot: -1 };
+      if (quarter === 3) return { sin: -1, cos: -1, tan: 1, cot: 1 };
+      // quarter 4
+      return { sin: -1, cos: 1, tan: -1, cot: -1 };
+    }
+
+    // ---------- безопасное форматирование ----------
+    function formatNumber(num) {
+      if (num === null || isNaN(num) || !isFinite(num)) return '—';
+      // округлим до 6 знаков, убираем лишние нули
+      return Number(num.toFixed(8)).toString();
+    }
+
+    // ---------- главная логика: зная одну функцию + четверть, найти остальные ----------
+    function computeAll(knownFunc, value, quarter) {
+      const signs = getSigns(quarter);
+      
+      // проверка на корректность числового значения
+      if (value === null || isNaN(value) || !isFinite(value)) {
+        throw new Error('Введите корректное число');
+      }
+
+      let sin = null, cos = null, tan = null, cot = null;
+      const eps = 1e-12;
+
+      // ---- ветвление в зависимости от известной функции ----
+      if (knownFunc === 'sin') {
+        sin = value;
+        // проверка, что |sin| <= 1 (с учётом погрешности)
+        if (Math.abs(sin) > 1.000001) throw new Error('Синус должен быть от -1 до 1');
+        sin = Math.max(-1, Math.min(1, sin)); // clamp
+        const cos2 = 1 - sin * sin;
+        if (cos2 < 0) throw new Error('Невозможно вычислить косинус (cos² < 0)');
+        cos = Math.sqrt(cos2) * signs.cos;
+        tan = (Math.abs(cos) < eps) ? null : sin / cos;
+        cot = (Math.abs(sin) < eps) ? null : cos / sin;
+      }
+      else if (knownFunc === 'cos') {
+        cos = value;
+        if (Math.abs(cos) > 1.000001) throw new Error('Косинус должен быть от -1 до 1');
+        cos = Math.max(-1, Math.min(1, cos));
+        const sin2 = 1 - cos * cos;
+        if (sin2 < 0) throw new Error('Невозможно вычислить синус');
+        sin = Math.sqrt(sin2) * signs.sin;
+        tan = (Math.abs(cos) < eps) ? null : sin / cos;
+        cot = (Math.abs(sin) < eps) ? null : cos / sin;
+      }
+      else if (knownFunc === 'tan') {
+        tan = value;
+        // тангенс может быть любым, но не бесконечность
+        if (!isFinite(tan)) throw new Error('Тангенс должен быть числом');
+        // Используем формулы: 1 + tan^2 = 1/cos^2  => cos^2 = 1/(1+tan^2)
+        const tan2 = tan * tan;
+        const cos2 = 1 / (1 + tan2);
+        cos = Math.sqrt(cos2) * signs.cos;
+        sin = tan * cos; // сохраняет знак
+        
+        // Корректировка для точности: если sin выходит за [-1,1]
+        if (Math.abs(sin) > 1.0) sin = Math.sign(sin) * 1.0;
+        cot = (Math.abs(tan) < eps) ? null : 1 / tan;
+      }
+      else if (knownFunc === 'cot') {
+        cot = value;
+        if (!isFinite(cot)) throw new Error('Котангенс должен быть числом');
+        if (Math.abs(cot) < eps) { // очень маленький котангенс → тангенс большой
+          tan = (cot >= 0) ? Infinity : -Infinity;
+        } else {
+          tan = 1 / cot;
+        }
+        // через котангенс: 1 + cot^2 = 1/sin^2  => sin^2 = 1/(1+cot^2)
+        const cot2 = cot * cot;
+        const sin2 = 1 / (1 + cot2);
+        sin = Math.sqrt(sin2) * signs.sin;
+        cos = sin * cot;
+        if (Math.abs(cos) > 1.0) cos = Math.sign(cos) * 1.0;
+        // тангенс уже есть, cot остаётся исходный
+      }
+
+      // Дополнительная валидация: знаки должны соответствовать четверти
+      if (sin !== null && Math.sign(sin) !== 0 && Math.sign(sin) !== signs.sin) {
+        // если ноль, знак не важен
+        if (Math.abs(sin) > 1e-9) throw new Error('Противоречие: знак синуса не совпадает с четвертью');
+      }
+      if (cos !== null && Math.sign(cos) !== 0 && Math.sign(cos) !== signs.cos) {
+        if (Math.abs(cos) > 1e-9) throw new Error('Противоречие: знак косинуса не совпадает с четвертью');
+      }
+      
+      // Проверка тангенса и котангенса на бесконечности
+      // если tan или cot ушли в Infinity, отображаем красиво
+      
+      return { sin, cos, tan, cot };
+    }
+
+    // ---------- отображение результатов ----------
+    function displayResults(results) {
+      const format = (val) => {
+        if (val === null) return '—';
+        if (!isFinite(val)) return val > 0 ? '∞' : '-∞';
+        return formatNumber(val);
+      };
+
+      resSin.textContent = format(results.sin);
+      resCos.textContent = format(results.cos);
+      resTan.textContent = format(results.tan);
+      resCot.textContent = format(results.cot);
+    }
+
+    function showError(msg) {
+      errorMsgDiv.textContent = msg;
+      resSin.textContent = '—';
+      resCos.textContent = '—';
+      resTan.textContent = '—';
+      resCot.textContent = '—';
+    }
+
+    function clearError() {
+      errorMsgDiv.textContent = '';
+    }
+
+    // обработчик нажатия на кнопку ВЫЧИСЛИТЬ
+    function onCalculate() {
+      clearError();
+      
+      const knownFunc = funcSelect.value;
+      const rawValue = valueInput.value.trim();
+      if (rawValue === '') {
+        showError('Введите значение функции');
+        return;
+      }
+      const numValue = parseFloat(rawValue);
+      if (isNaN(numValue)) {
+        showError('Некорректное число');
+        return;
+      }
+
+      try {
+        const results = computeAll(knownFunc, numValue, currentQuarter);
+        displayResults(results);
+      } catch (e) {
+        showError(e.message);
+      }
+    }
+
+    // Привязка событий
+    calcBtn.addEventListener('click', onCalculate);
+
+    // Enter в поле ввода тоже запускает расчёт
+    valueInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        onCalculate();
+      }
+    });
+
+    // При загрузке сразу вычислить для начального значения (sin = 0.5, I четверть)
+    window.addEventListener('DOMContentLoaded', () => {
+      // устанавливаем начальное активное состояние
+      setActiveQuarter(1);
+      // выполняем расчёт
+      onCalculate();
+    });
+
+    // Доп. фича: если пользователь меняет функцию, можно оставить, но не пересчитываем автоматически.
+    // только по кнопке.
+  })();
+</script>
+</body>
+</html>
