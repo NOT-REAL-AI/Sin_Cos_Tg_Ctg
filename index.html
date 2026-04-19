@@ -171,7 +171,7 @@
       box-shadow: 0 0 24px #ff96e0, 0 0 8px #b8a2ff inset;
     }
 
-    /* Конструктор значения: корень, число, π */
+    /* Конструктор значения */
     .value-constructor {
       background: rgba(0, 0, 0, 0.2);
       border-radius: 48px;
@@ -180,54 +180,69 @@
       border: 1px solid #4f5a9e66;
     }
 
-    .flex-row {
+    .expression-builder {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 12px 16px;
+      gap: 10px 15px;
     }
 
-    .root-prefix {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .sqrt-symbol {
-      font-size: 2rem;
-      font-weight: 600;
-      color: #b1c6ff;
-      text-shadow: 0 0 6px cyan;
-    }
-
-    .small-input {
-      width: 100px;
-      background: rgba(12, 15, 30, 0.9);
-      border: 1.5px solid #7f8ed4;
-      border-radius: 30px;
-      padding: 12px 16px;
-      font-size: 1.2rem;
-      color: white;
-      text-align: center;
-    }
-
-    .pi-toggle {
+    .expr-part {
       display: flex;
       align-items: center;
       gap: 8px;
-      background: #191e3a;
-      padding: 6px 16px;
+      background: rgba(20, 25, 50, 0.6);
+      padding: 5px 15px;
       border-radius: 40px;
-      border: 1px solid #6d82cf;
+      border: 1px solid #5f73b0;
     }
 
-    .pi-toggle label {
-      color: #d3deff;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .expr-input {
+      width: 100px;
+      background: transparent;
+      border: none;
+      padding: 10px 5px;
+      font-size: 1.3rem;
+      color: #ffffff;
+      text-align: center;
+      outline: none;
+      font-weight: 600;
+    }
+
+    .expr-input::placeholder {
+      color: #7a89c2;
+      font-size: 1rem;
+    }
+
+    .expr-label {
+      color: #b7cbff;
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .pi-btn {
+      background: #2a3366;
+      border: 1.5px solid #8f9eff;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 40px;
+      font-size: 1.4rem;
+      font-weight: bold;
       cursor: pointer;
+      transition: 0.15s;
+      box-shadow: 0 0 15px #3f6eff;
+    }
+
+    .pi-btn.active {
+      background: #6d4aff;
+      border-color: #ffdb9e;
+      box-shadow: 0 0 25px #b77aff;
+    }
+
+    .help-text {
+      margin-top: 12px;
+      color: #9aaddd;
+      font-size: 0.9rem;
     }
 
     .quarter-section {
@@ -395,24 +410,23 @@
     </div>
   </div>
 
-  <!-- КОНСТРУКТОР ЗНАЧЕНИЯ: корень, число, π -->
+  <!-- НОВЫЙ УДОБНЫЙ ВВОД: дробь, корень, π -->
   <div class="value-constructor">
-    <div class="label-icon">💎 ВВЕДИТЕ ЗНАЧЕНИЕ (можно с корнем и π)</div>
-    <div class="flex-row">
-      <div class="root-prefix">
-        <span class="sqrt-symbol">√</span>
-        <input type="number" id="sqrtInput" class="small-input" placeholder="под корнем" value="" step="any" min="0">
+    <div class="label-icon">💎 ВВЕДИТЕ ВЫРАЖЕНИЕ</div>
+    <div class="expression-builder">
+      <div class="expr-part">
+        <span class="expr-label">√</span>
+        <input type="text" id="sqrtInput" class="expr-input" placeholder="число" value="">
       </div>
-      <div style="color:#b7c9ff; font-size:1.5rem;">·</div>
-      <input type="number" id="coeffInput" class="small-input" placeholder="множ." value="1" step="any">
-      <div class="pi-toggle">
-        <label>
-          <input type="checkbox" id="piCheckbox"> <span style="font-size:1.8rem; font-weight:600;">π</span>
-        </label>
+      <span style="color:#b7cbff; font-size:1.8rem;">·</span>
+      <div class="expr-part">
+        <input type="text" id="fractionInput" class="expr-input" placeholder="a/b или число" value="1" style="width:120px;">
       </div>
-      <div style="margin-left:auto; font-size:0.9rem; color:#9aabdf;">пример: √3 · ½ · π</div>
+      <div class="pi-btn" id="piToggle">π</div>
     </div>
-    <div style="font-size:0.9rem; margin-top:12px; color:#a3b6ff;">оставьте √ пустым, если не нужен. коэффициент = 1 по умолчанию.</div>
+    <div class="help-text">
+      ✦ Примеры: √3 · 1/2 · π  |  √2 · 5/6  |  3/4 · π  |  √2 · 1  |  просто 0.5 ✦
+    </div>
   </div>
 
   <!-- ЧЕТВЕРТЬ -->
@@ -431,7 +445,7 @@
 
   <button class="calc-btn" id="calculateBtn">ВЫЧИСЛИТЬ</button>
 
-  <!-- РЕЗУЛЬТАТЫ (в символьном виде) -->
+  <!-- РЕЗУЛЬТАТЫ -->
   <div class="results-panel">
     <div class="result-grid">
       <div class="result-item"><span class="func-name">sin α</span><span class="func-value" id="resSin">—</span></div>
@@ -452,8 +466,8 @@
 
     const funcSelect = document.getElementById('funcSelect');
     const sqrtInput = document.getElementById('sqrtInput');
-    const coeffInput = document.getElementById('coeffInput');
-    const piCheck = document.getElementById('piCheckbox');
+    const fractionInput = document.getElementById('fractionInput');
+    const piToggle = document.getElementById('piToggle');
     const quarterBtns = document.querySelectorAll('.quarter-btn');
     const calcBtn = document.getElementById('calculateBtn');
 
@@ -464,6 +478,13 @@
     const errorMsgDiv = document.getElementById('errorMsg');
 
     let currentQuarter = 1;
+    let piActive = false;
+
+    // Переключение π
+    piToggle.addEventListener('click', () => {
+      piActive = !piActive;
+      piToggle.classList.toggle('active', piActive);
+    });
 
     function setActiveQuarter(quarter) {
       quarterBtns.forEach(btn => {
@@ -479,114 +500,57 @@
       });
     });
 
-    // --- парсинг значения из конструктора ---
-    function parseExactValue() {
-      let sqrtVal = sqrtInput.value.trim();
-      let coeffVal = coeffInput.value.trim();
-      const hasPi = piCheck.checked;
+    // --- Парсинг дроби (a/b или число) ---
+    function parseFraction(str) {
+      str = str.trim();
+      if (str === '') return 1;
+      if (str.includes('/')) {
+        let parts = str.split('/');
+        if (parts.length !== 2) throw new Error('Дробь должна быть вида a/b');
+        let num = parseFloat(parts[0]);
+        let den = parseFloat(parts[1]);
+        if (isNaN(num) || isNaN(den)) throw new Error('Неверный формат дроби');
+        if (den === 0) throw new Error('Деление на ноль');
+        return num / den;
+      } else {
+        let val = parseFloat(str);
+        if (isNaN(val)) throw new Error('Введите число или дробь');
+        return val;
+      }
+    }
 
+    // Получение структуры для символьного отображения
+    function getSymbolicStructure() {
+      let sqrtStr = sqrtInput.value.trim();
       let sqrtNum = null;
-      if (sqrtVal !== '') {
-        sqrtNum = parseFloat(sqrtVal);
-        if (isNaN(sqrtNum) || sqrtNum < 0) throw new Error('Под корнем должно быть неотрицательное число');
+      if (sqrtStr !== '') {
+        sqrtNum = parseFloat(sqrtStr);
+        if (isNaN(sqrtNum) || sqrtNum < 0) throw new Error('Под корнем ≥ 0');
       }
-
-      let coeff = 1;
-      if (coeffVal !== '') {
-        coeff = parseFloat(coeffVal);
-        if (isNaN(coeff)) throw new Error('Коэффициент должен быть числом');
-      }
-
-      // Собираем числовое значение
+      
+      let fracStr = fractionInput.value.trim();
+      let coeff = parseFraction(fracStr);
+      
       let numericValue = coeff;
       if (sqrtNum !== null) numericValue *= Math.sqrt(sqrtNum);
-      if (hasPi) numericValue *= Math.PI;
-
-      return { numericValue, sqrtNum, coeff, hasPi };
+      if (piActive) numericValue *= Math.PI;
+      
+      // Сохраняем исходную дробь как строку для красоты
+      let fractionDisplay = fracStr;
+      if (!fracStr.includes('/') && !isNaN(parseFloat(fracStr))) {
+        // если это целое или десятичное — попробуем преобразовать в дробь
+        fractionDisplay = toFractionString(coeff);
+      }
+      
+      return { numericValue, sqrtNum, fractionDisplay, hasPi: piActive, coeff };
     }
 
-    // --- Форматирование числа в символьную строку (корень, π, дробь) ---
-    function formatExact(num, sqrtNum, coeff, hasPi, forceSign = false) {
-      if (num === null || !isFinite(num)) {
-        if (num === Infinity) return '∞';
-        if (num === -Infinity) return '-∞';
-        return '—';
-      }
-
-      // Специально для тангенса/котангенса бесконечность
-      if (!isFinite(num)) return num > 0 ? '∞' : '-∞';
-
-      // Определяем знак
-      const sign = num < 0 ? -1 : 1;
-      const absNum = Math.abs(num);
-      
-      // Если числовое значение ~0
-      if (absNum < 1e-12) return '0';
-
-      // Попробуем восстановить символьное представление:
-      // Мы знаем исходные sqrtNum, coeff, hasPi. Но в результате могло измениться.
-      // Перестроим: вычислим рациональную часть (без корней и π)
-      let rationalPart = absNum;
-      let hasSqrt = false;
-      let sqrtValue = 1;
-      let piFactor = false;
-
-      if (hasPi) {
-        rationalPart /= Math.PI;
-        piFactor = true;
-      }
-      if (sqrtNum !== null) {
-        rationalPart /= Math.sqrt(sqrtNum);
-        hasSqrt = true;
-        sqrtValue = sqrtNum;
-      }
-      // Теперь rationalPart ~ coeff (может быть не целым)
-      // Но после вычислений могло получиться не точно, поэтому красиво округлим для отображения
-      // Используем дробное представление с помощью метода toFraction
-      
-      let fractionStr = toFraction(rationalPart);
-      
-      // Собираем строку
-      let str = '';
-      if (sign === -1) str += '-';
-      
-      // обрабатываем случай когда fractionStr "0" — тогда просто 0
-      if (fractionStr === '0') return '0';
-      
-      // если дробь = 1 и нет других множителей — пропускаем
-      const isOne = (fractionStr === '1');
-      
-      if (!isOne || (!hasSqrt && !piFactor)) {
-        str += fractionStr;
-      }
-      
-      if (hasSqrt) {
-        if (!isOne) str += '·';
-        str += `√${formatSqrtNumber(sqrtValue)}`;
-      }
-      if (piFactor) {
-        if (!isOne || hasSqrt) str += '·';
-        str += 'π';
-      }
-      
-      if (str === '' || str === '-') return '0';
-      return str;
-    }
-
-    function formatSqrtNumber(n) {
-      if (Number.isInteger(n)) return n.toString();
-      return n.toFixed(4).replace(/\.?0+$/, '');
-    }
-
-    // Преобразование числа в красивую дробь (например 0.5 → 1/2)
-    function toFraction(x, maxDen = 100) {
-      if (Math.abs(x) < 1e-9) return '0';
+    // Преобразование числа в строку-дробь
+    function toFractionString(x, maxDen = 100) {
+      if (Math.abs(x) < 1e-12) return '0';
       const sign = x < 0 ? -1 : 1;
       x = Math.abs(x);
-      
-      let bestNum = 1, bestDen = 1;
-      let bestDiff = Math.abs(x - 1);
-      
+      let bestNum = 1, bestDen = 1, bestDiff = Math.abs(x - 1);
       for (let den = 1; den <= maxDen; den++) {
         let num = Math.round(x * den);
         let diff = Math.abs(x - num / den);
@@ -596,14 +560,57 @@
           bestDen = den;
         }
       }
-      // упрощаем дробь
       const gcd = (a, b) => b ? gcd(b, a % b) : a;
       const div = gcd(bestNum, bestDen);
       bestNum /= div;
       bestDen /= div;
-      
       if (bestDen === 1) return (sign * bestNum).toString();
       return `${sign * bestNum}/${bestDen}`;
+    }
+
+    // Форматирование результата
+    function formatExact(num, sqrtNum, fractionDisplay, hasPi) {
+      if (num === null || !isFinite(num)) {
+        if (num === Infinity) return '∞';
+        if (num === -Infinity) return '-∞';
+        return '—';
+      }
+      if (!isFinite(num)) return num > 0 ? '∞' : '-∞';
+      
+      const sign = num < 0 ? -1 : 1;
+      const absNum = Math.abs(num);
+      if (absNum < 1e-12) return '0';
+      
+      // Пытаемся восстановить символьный вид
+      let rational = absNum;
+      let hasSqrt = (sqrtNum !== null);
+      let sqrtVal = sqrtNum;
+      
+      if (hasPi) rational /= Math.PI;
+      if (hasSqrt) rational /= Math.sqrt(sqrtNum);
+      
+      // rational теперь примерно равен исходному coeff
+      let fracPart = toFractionString(rational);
+      
+      let parts = [];
+      if (fracPart !== '1' || (!hasSqrt && !hasPi)) {
+        parts.push(fracPart);
+      }
+      if (hasSqrt) {
+        parts.push(`√${formatSqrt(sqrtVal)}`);
+      }
+      if (hasPi) {
+        parts.push('π');
+      }
+      
+      let result = parts.join('·');
+      if (result === '') result = '1';
+      return (sign === -1 ? '-' : '') + result;
+    }
+
+    function formatSqrt(n) {
+      if (Number.isInteger(n)) return n.toString();
+      return n.toFixed(4).replace(/\.?0+$/, '');
     }
 
     function getSigns(q) {
@@ -613,14 +620,14 @@
       return { sin: -1, cos: 1, tan: -1, cot: -1 };
     }
 
-    function computeAll(knownFunc, numVal, sqrtNum, coeff, hasPi, quarter) {
+    function computeAll(knownFunc, numVal, quarter) {
       const signs = getSigns(quarter);
       const eps = 1e-12;
       let sin = null, cos = null, tan = null, cot = null;
       
       if (knownFunc === 'sin') {
         sin = numVal;
-        if (Math.abs(sin) > 1.000001) throw new Error('|sin| должен быть ≤ 1');
+        if (Math.abs(sin) > 1.000001) throw new Error('|sin| ≤ 1');
         sin = Math.max(-1, Math.min(1, sin));
         const cos2 = 1 - sin*sin;
         if (cos2 < 0) throw new Error('cos² < 0');
@@ -629,7 +636,7 @@
         cot = (Math.abs(sin) < eps) ? (cos >= 0 ? Infinity : -Infinity) : cos / sin;
       } else if (knownFunc === 'cos') {
         cos = numVal;
-        if (Math.abs(cos) > 1.000001) throw new Error('|cos| должен быть ≤ 1');
+        if (Math.abs(cos) > 1.000001) throw new Error('|cos| ≤ 1');
         cos = Math.max(-1, Math.min(1, cos));
         const sin2 = 1 - cos*cos;
         if (sin2 < 0) throw new Error('sin² < 0');
@@ -638,16 +645,16 @@
         cot = (Math.abs(sin) < eps) ? (cos >= 0 ? Infinity : -Infinity) : cos / sin;
       } else if (knownFunc === 'tan') {
         tan = numVal;
-        if (!isFinite(tan)) throw new Error('tg должен быть числом');
+        if (!isFinite(tan)) throw new Error('tg число');
         const tan2 = tan*tan;
         const cos2 = 1/(1+tan2);
         cos = Math.sqrt(cos2) * signs.cos;
         sin = tan * cos;
         if (Math.abs(sin) > 1) sin = Math.sign(sin);
         cot = (Math.abs(tan) < eps) ? (cos >= 0 ? Infinity : -Infinity) : 1/tan;
-      } else { // cot
+      } else {
         cot = numVal;
-        if (!isFinite(cot)) throw new Error('ctg должен быть числом');
+        if (!isFinite(cot)) throw new Error('ctg число');
         if (Math.abs(cot) < eps) {
           tan = (cot >= 0) ? Infinity : -Infinity;
         } else {
@@ -660,28 +667,19 @@
         if (Math.abs(cos) > 1) cos = Math.sign(cos);
       }
       
-      // проверка знаков
-      if (sin !== null && !isNaN(sin) && isFinite(sin) && Math.abs(sin) > 1e-9 && Math.sign(sin) !== signs.sin)
-        throw new Error('Знак sin противоречит четверти');
-      if (cos !== null && !isNaN(cos) && isFinite(cos) && Math.abs(cos) > 1e-9 && Math.sign(cos) !== signs.cos)
-        throw new Error('Знак cos противоречит четверти');
-        
       return { sin, cos, tan, cot };
-    }
-
-    function displayResults(results, sqrtNum, coeff, hasPi) {
-      resSin.textContent = formatExact(results.sin, sqrtNum, coeff, hasPi);
-      resCos.textContent = formatExact(results.cos, sqrtNum, coeff, hasPi);
-      resTan.textContent = formatExact(results.tan, sqrtNum, coeff, hasPi);
-      resCot.textContent = formatExact(results.cot, sqrtNum, coeff, hasPi);
     }
 
     function onCalculate() {
       errorMsgDiv.textContent = '';
       try {
-        const parsed = parseExactValue();
-        const results = computeAll(funcSelect.value, parsed.numericValue, parsed.sqrtNum, parsed.coeff, parsed.hasPi, currentQuarter);
-        displayResults(results, parsed.sqrtNum, parsed.coeff, parsed.hasPi);
+        const parsed = getSymbolicStructure();
+        const results = computeAll(funcSelect.value, parsed.numericValue, currentQuarter);
+        
+        resSin.textContent = formatExact(results.sin, parsed.sqrtNum, parsed.fractionDisplay, parsed.hasPi);
+        resCos.textContent = formatExact(results.cos, parsed.sqrtNum, parsed.fractionDisplay, parsed.hasPi);
+        resTan.textContent = formatExact(results.tan, parsed.sqrtNum, parsed.fractionDisplay, parsed.hasPi);
+        resCot.textContent = formatExact(results.cot, parsed.sqrtNum, parsed.fractionDisplay, parsed.hasPi);
       } catch (e) {
         errorMsgDiv.textContent = e.message;
         resSin.textContent = resCos.textContent = resTan.textContent = resCot.textContent = '—';
@@ -689,12 +687,12 @@
     }
 
     calcBtn.addEventListener('click', onCalculate);
-    
-    // Enter в полях
-    [sqrtInput, coeffInput].forEach(i => i.addEventListener('keypress', e => { if(e.key==='Enter') onCalculate(); }));
+    [sqrtInput, fractionInput].forEach(i => i.addEventListener('keypress', e => { if(e.key==='Enter') onCalculate(); }));
     
     window.addEventListener('DOMContentLoaded', () => {
       setActiveQuarter(1);
+      piActive = false;
+      piToggle.classList.remove('active');
       onCalculate();
     });
   })();
