@@ -14,7 +14,7 @@
 
     body {
       min-height: 100vh;
-      background: radial-gradient(circle at 20% 30%, #0b0d1e, #020108);
+      background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 25%, #d4e8ff 50%, #b8d9ff 75%, #a0c8ff 100%);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -23,6 +23,7 @@
       overflow-x: hidden;
     }
 
+    /* Яркие синие и белые размытые пятна */
     body::before {
       content: "";
       position: absolute;
@@ -30,8 +31,8 @@
       height: 80vw;
       max-width: 900px;
       max-height: 900px;
-      background: radial-gradient(circle, rgba(255, 0, 150, 0.25) 0%, rgba(0, 200, 255, 0.15) 50%, transparent 80%);
-      filter: blur(120px);
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, rgba(100, 180, 255, 0.4) 50%, transparent 80%);
+      filter: blur(100px);
       top: -10%;
       left: -10%;
       z-index: 0;
@@ -45,8 +46,8 @@
       height: 70vw;
       max-width: 800px;
       max-height: 800px;
-      background: radial-gradient(circle, rgba(0, 255, 200, 0.2) 0%, rgba(150, 0, 255, 0.25) 60%, transparent 90%);
-      filter: blur(130px);
+      background: radial-gradient(circle, rgba(200, 230, 255, 0.8) 0%, rgba(0, 100, 200, 0.3) 60%, transparent 90%);
+      filter: blur(110px);
       bottom: -5%;
       right: -5%;
       z-index: 0;
@@ -54,12 +55,12 @@
     }
 
     @keyframes auraFloat1 {
-      0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+      0% { transform: translate(0, 0) scale(1); opacity: 0.8; }
       100% { transform: translate(8%, 6%) scale(1.2); opacity: 1; }
     }
     @keyframes auraFloat2 {
-      0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-      100% { transform: translate(-5%, -8%) scale(1.3); opacity: 0.9; }
+      0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+      100% { transform: translate(-5%, -8%) scale(1.3); opacity: 1; }
     }
 
     .calculator {
@@ -67,18 +68,18 @@
       z-index: 10;
       max-width: 900px;
       width: 100%;
-      background: rgba(5, 7, 19, 0.65);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 1px solid rgba(255, 215, 255, 0.25);
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 2px solid rgba(255, 255, 255, 0.8);
       border-radius: 48px;
       padding: 30px 28px 36px;
-      box-shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 255, 255, 0.1) inset, 0 0 30px rgba(180, 0, 255, 0.3);
+      box-shadow: 0 25px 50px -8px rgba(0, 50, 100, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.5) inset, 0 0 40px rgba(0, 150, 255, 0.3);
       transition: box-shadow 0.3s;
     }
 
     .calculator:hover {
-      box-shadow: 0 30px 60px -5px black, 0 0 0 1.5px rgba(210, 180, 255, 0.4) inset, 0 0 50px #a05eff55;
+      box-shadow: 0 30px 60px -5px rgba(0, 70, 150, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.8) inset, 0 0 60px rgba(0, 180, 255, 0.5);
     }
 
     .title-block {
@@ -91,23 +92,23 @@
       font-weight: 800;
       letter-spacing: 5px;
       text-transform: uppercase;
-      background: linear-gradient(135deg, #ffe99c, #ffd0b0, #c5b4ff, #9eeafb, #b0ffcf);
+      background: linear-gradient(135deg, #0066cc, #0099ff, #00ccff, #66b3ff);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 18px #ff66c0, 0 0 35px #4ad0ff;
-      filter: drop-shadow(0 4px 6px #00000050);
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px #0099ff;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
       word-break: break-word;
     }
 
     .subaura {
-      color: #cdd9ff;
-      font-weight: 400;
+      color: #004c99;
+      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 8px;
       font-size: 0.9rem;
       margin-top: 6px;
-      text-shadow: 0 0 10px cyan;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
       opacity: 0.9;
     }
 
@@ -127,25 +128,25 @@
     .label-icon {
       display: block;
       font-size: 0.9rem;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: #b7c9ff;
+      color: #0059b3;
       margin-bottom: 8px;
-      text-shadow: 0 0 8px #00c8ff;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
     }
 
     .neo-select, .neo-input {
       width: 100%;
-      background: rgba(12, 15, 30, 0.8);
-      border: 1.5px solid rgba(150, 200, 255, 0.5);
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid #4da6ff;
       border-radius: 40px;
       padding: 14px 20px;
       font-size: 1.2rem;
       font-weight: 600;
-      color: #f0f4ff;
+      color: #003366;
       backdrop-filter: blur(8px);
-      box-shadow: 0 6px 12px #00000030, 0 0 10px #3f9eff33 inset;
+      box-shadow: 0 4px 12px rgba(0, 100, 200, 0.2), 0 0 15px rgba(255, 255, 255, 0.5) inset;
       transition: all 0.2s;
       outline: none;
       cursor: pointer;
@@ -156,28 +157,29 @@
     }
 
     .neo-select option {
-      background: #0f1225;
-      color: #eef3ff;
+      background: #ffffff;
+      color: #003366;
       font-weight: 500;
     }
 
     .neo-select:hover, .neo-input:hover {
-      border-color: #b77eff;
-      box-shadow: 0 0 18px #a570ff, 0 6px 12px #000;
+      border-color: #0080ff;
+      box-shadow: 0 0 20px #66b3ff, 0 4px 12px rgba(0, 100, 200, 0.3);
     }
 
     .neo-select:focus, .neo-input:focus {
-      border-color: #ffb0f0;
-      box-shadow: 0 0 24px #ff96e0, 0 0 8px #b8a2ff inset;
+      border-color: #0066cc;
+      box-shadow: 0 0 30px #99ccff, 0 0 15px rgba(255, 255, 255, 0.8) inset;
     }
 
     /* Конструктор значения */
     .value-constructor {
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.6);
       border-radius: 48px;
       padding: 20px 18px;
       margin-bottom: 20px;
-      border: 1px solid #4f5a9e66;
+      border: 2px solid rgba(77, 166, 255, 0.5);
+      box-shadow: 0 8px 20px rgba(0, 100, 200, 0.15);
     }
 
     .expression-builder {
@@ -191,10 +193,11 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(20, 25, 50, 0.6);
+      background: rgba(255, 255, 255, 0.8);
       padding: 5px 15px;
       border-radius: 40px;
-      border: 1px solid #5f73b0;
+      border: 2px solid #66b3ff;
+      box-shadow: 0 2px 8px rgba(0, 100, 200, 0.1);
     }
 
     .expr-input {
@@ -203,26 +206,26 @@
       border: none;
       padding: 10px 5px;
       font-size: 1.3rem;
-      color: #ffffff;
+      color: #003366;
       text-align: center;
       outline: none;
       font-weight: 600;
     }
 
     .expr-input::placeholder {
-      color: #7a89c2;
+      color: #80b3ff;
       font-size: 1rem;
     }
 
     .expr-label {
-      color: #b7cbff;
+      color: #0059b3;
       font-size: 1.4rem;
       font-weight: 600;
     }
 
     .pi-btn {
-      background: #2a3366;
-      border: 1.5px solid #8f9eff;
+      background: #4da6ff;
+      border: 2px solid #ffffff;
       color: white;
       padding: 12px 22px;
       border-radius: 40px;
@@ -230,19 +233,22 @@
       font-weight: bold;
       cursor: pointer;
       transition: 0.15s;
-      box-shadow: 0 0 15px #3f6eff;
+      box-shadow: 0 4px 12px rgba(0, 100, 200, 0.3);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     .pi-btn.active {
-      background: #6d4aff;
-      border-color: #ffdb9e;
-      box-shadow: 0 0 25px #b77aff;
+      background: #0066cc;
+      border-color: #ffffff;
+      box-shadow: 0 0 25px #66b3ff, 0 4px 12px rgba(0, 100, 200, 0.4);
     }
 
     .help-text {
       margin-top: 12px;
-      color: #9aaddd;
+      color: #004c99;
       font-size: 0.9rem;
+      font-weight: 500;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
     }
 
     .quarter-section {
@@ -250,14 +256,15 @@
     }
 
     .quarter-title {
-      color: #c6d0ff;
+      color: #0059b3;
       margin-bottom: 16px;
       font-size: 1.2rem;
+      font-weight: 600;
       letter-spacing: 2px;
       display: flex;
       align-items: center;
       gap: 8px;
-      text-shadow: 0 0 8px magenta;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
     }
 
     .quarter-grid {
@@ -267,16 +274,16 @@
     }
 
     .quarter-btn {
-      background: rgba(20, 20, 45, 0.7);
+      background: rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(8px);
-      border: 1.5px solid #4f5a9e;
+      border: 2px solid #80b3ff;
       border-radius: 60px;
       padding: 16px 5px;
       font-size: 1.6rem;
       font-weight: 800;
-      color: #e1e6ff;
-      text-shadow: 0 0 10px #80c0ff;
-      box-shadow: 0 8px 0 #0a0c1a, 0 4px 18px #00000080, 0 0 12px #3f7bff55 inset;
+      color: #004c99;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      box-shadow: 0 6px 0 #b3d4ff, 0 4px 12px rgba(0, 100, 200, 0.2);
       transition: all 0.15s;
       cursor: pointer;
       text-align: center;
@@ -284,18 +291,23 @@
     }
 
     .quarter-btn.active {
-      background: linear-gradient(145deg, #4343b0, #1f1f66);
-      border-color: #ffdb9e;
-      box-shadow: 0 0 25px #fa9eff, 0 0 12px #00ffff, 0 4px 0 #191c30;
+      background: linear-gradient(145deg, #4da6ff, #0066cc);
+      border-color: #ffffff;
+      box-shadow: 0 0 25px #66b3ff, 0 0 15px #ffffff, 0 4px 0 #004c99;
       color: white;
       transform: scale(1.02);
       text-shadow: 0 0 20px white;
     }
 
+    .quarter-btn:hover {
+      background: #99ccff;
+      border-color: #4da6ff;
+    }
+
     .calc-btn {
       width: 100%;
-      background: linear-gradient(135deg, #ae6eff, #3a86ff);
-      border: none;
+      background: linear-gradient(135deg, #0080ff, #0066cc);
+      border: 2px solid #ffffff;
       border-radius: 60px;
       padding: 18px 10px;
       font-size: 1.8rem;
@@ -303,26 +315,25 @@
       text-transform: uppercase;
       letter-spacing: 8px;
       color: #ffffff;
-      text-shadow: 0 2px 10px black;
-      box-shadow: 0 16px 0 #1a1e3a, 0 8px 30px #000000b0, 0 0 30px #be7cff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 12px 0 #004c99, 0 8px 25px rgba(0, 100, 200, 0.4), 0 0 30px #66b3ff;
       margin: 16px 0 24px;
       cursor: pointer;
       transition: 0.08s linear;
-      border: 1px solid #ffd0f0aa;
     }
 
     .calc-btn:active {
-      transform: translateY(8px);
-      box-shadow: 0 8px 0 #12162e, 0 8px 25px #000, 0 0 40px #ffa0e0;
+      transform: translateY(6px);
+      box-shadow: 0 6px 0 #004c99, 0 8px 25px rgba(0, 100, 200, 0.4), 0 0 40px #99ccff;
     }
 
     .results-panel {
-      background: rgba(0, 5, 20, 0.5);
-      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
       border-radius: 40px;
       padding: 24px 22px;
-      border: 1px solid rgba(0, 255, 255, 0.3);
-      box-shadow: 0 0 30px #001aff1a, inset 0 0 15px #3e3eb0;
+      border: 2px solid rgba(77, 166, 255, 0.5);
+      box-shadow: 0 8px 20px rgba(0, 100, 200, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.8);
     }
 
     .result-grid {
@@ -335,58 +346,61 @@
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      border-bottom: 1.5px dashed #5d71b9;
+      border-bottom: 2px dashed #4da6ff;
       padding-bottom: 8px;
     }
 
     .func-name {
       font-size: 1.7rem;
       font-weight: 700;
-      background: linear-gradient(145deg, #ffe6b0, #cbb2ff);
+      background: linear-gradient(145deg, #0066cc, #0099ff);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 15px #fea3ff;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
     }
 
     .func-value {
       font-size: 2rem;
       font-weight: 800;
       font-family: 'Courier New', monospace;
-      color: #ffffff;
-      text-shadow: 0 0 20px #3effe6, 0 0 5px black;
+      color: #003366;
+      text-shadow: 0 0 15px #ffffff, 0 0 5px rgba(0, 150, 255, 0.3);
       letter-spacing: 2px;
       word-break: break-word;
       text-align: right;
     }
 
     .error-message {
-      color: #ffb0b0;
-      background: #2f0033aa;
+      color: #cc0000;
+      background: rgba(255, 240, 240, 0.9);
       border-radius: 30px;
       padding: 10px 18px;
       margin-top: 16px;
-      font-weight: 500;
+      font-weight: 600;
       backdrop-filter: blur(5px);
-      border-left: 8px solid #ff5060;
+      border-left: 8px solid #ff3333;
+      box-shadow: 0 2px 8px rgba(255, 0, 0, 0.2);
     }
 
     .info-note {
-      color: #adc8ff;
+      color: #0059b3;
       font-size: 0.9rem;
       margin-top: 12px;
       text-align: right;
-      opacity: 0.8;
+      opacity: 0.9;
+      font-weight: 500;
     }
 
     .signature {
       margin-top: 28px;
       text-align: center;
-      color: #a3abdd;
-      font-weight: 300;
+      color: #0066cc;
+      font-weight: 600;
       text-transform: uppercase;
       font-size: 0.8rem;
       letter-spacing: 6px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
   </style>
 </head>
@@ -418,7 +432,7 @@
         <span class="expr-label">√</span>
         <input type="text" id="sqrtInput" class="expr-input" placeholder="число" value="">
       </div>
-      <span style="color:#b7cbff; font-size:1.8rem;">·</span>
+      <span style="color:#0059b3; font-size:1.8rem;">·</span>
       <div class="expr-part">
         <input type="text" id="fractionInput" class="expr-input" placeholder="a/b или число" value="1" style="width:120px;">
       </div>
@@ -433,7 +447,7 @@
   <div class="quarter-section">
     <div class="quarter-title">
       <span>🧿 ЧЕТВЕРТЬ УГЛА α</span>
-      <span style="font-size:0.8rem; opacity:0.7;">(I · II · III · IV)</span>
+      <span style="font-size:0.8rem; opacity:0.8;">(I · II · III · IV)</span>
     </div>
     <div class="quarter-grid">
       <div class="quarter-btn active" data-quarter="1">Ⅰ</div>
@@ -505,17 +519,12 @@
       str = str.trim();
       if (str === '') return 1;
       
-      // Проверяем, содержит ли строка дробь
       if (str.includes('/')) {
         let parts = str.split('/');
         if (parts.length !== 2) throw new Error('Дробь должна быть вида a/b');
         
-        let num = parts[0].trim();
-        let den = parts[1].trim();
-        
-        // Обработка отрицательных чисел
-        let numerator = parseFloat(num);
-        let denominator = parseFloat(den);
+        let numerator = parseFloat(parts[0].trim());
+        let denominator = parseFloat(parts[1].trim());
         
         if (isNaN(numerator) || isNaN(denominator)) {
           throw new Error('Неверный формат дроби');
@@ -524,11 +533,35 @@
         
         return numerator / denominator;
       } else {
-        // Обычное число (может быть десятичное)
         let val = parseFloat(str);
         if (isNaN(val)) throw new Error('Введите число или дробь');
         return val;
       }
+    }
+
+    // Получение числового значения
+    function getNumericValue() {
+      let sqrtStr = sqrtInput.value.trim();
+      let sqrtNum = null;
+      if (sqrtStr !== '') {
+        sqrtNum = parseFloat(sqrtStr);
+        if (isNaN(sqrtNum) || sqrtNum < 0) throw new Error('Под корнем должно быть неотрицательное число');
+      }
+      
+      let fracStr = fractionInput.value.trim();
+      if (fracStr === '') fracStr = '1';
+      
+      let coeff = parseFraction(fracStr);
+      
+      let numericValue = coeff;
+      if (sqrtNum !== null) {
+        numericValue = numericValue * Math.sqrt(sqrtNum);
+      }
+      if (piActive) {
+        numericValue = numericValue * Math.PI;
+      }
+      
+      return numericValue;
     }
 
     // Получение структуры для символьного отображения
@@ -545,7 +578,6 @@
       
       let coeff = parseFraction(fracStr);
       
-      // ВАЖНОЕ ИСПРАВЛЕНИЕ: правильно вычисляем числовое значение
       let numericValue = coeff;
       if (sqrtNum !== null) {
         numericValue = numericValue * Math.sqrt(sqrtNum);
@@ -553,8 +585,6 @@
       if (piActive) {
         numericValue = numericValue * Math.PI;
       }
-      
-      console.log('Parsed:', { sqrtNum, coeff, piActive, numericValue }); // Для отладки
       
       return { numericValue, sqrtNum, fractionDisplay: fracStr, hasPi: piActive, coeff };
     }
@@ -599,14 +629,12 @@
       const absNum = Math.abs(num);
       if (absNum < 1e-12) return '0';
       
-      // Пытаемся восстановить символьный вид
       let rational = absNum;
       let hasSqrt = (sqrtNum !== null);
       
       if (hasPi) rational /= Math.PI;
       if (hasSqrt) rational /= Math.sqrt(sqrtNum);
       
-      // rational теперь примерно равен исходному coeff
       let fracPart = toFractionString(rational);
       
       let parts = [];
@@ -640,54 +668,59 @@
 
     function computeAll(knownFunc, numVal, quarter) {
       const signs = getSigns(quarter);
-      const eps = 1e-12;
+      const eps = 1e-10;
       let sin = null, cos = null, tan = null, cot = null;
       
+      // Исправленная проверка для sin и cos
       if (knownFunc === 'sin') {
+        // Проверяем, что значение в допустимом диапазоне
+        if (Math.abs(numVal) > 1) {
+          if (Math.abs(numVal) > 1.000001) {
+            throw new Error(`|sin α| должен быть ≤ 1 (получено ${numVal.toFixed(6)})`);
+          }
+          // Если близко к 1, обрезаем
+          numVal = Math.sign(numVal) * 1;
+        }
         sin = numVal;
-        // Проверяем с небольшим запасом на погрешность вычислений
-        if (Math.abs(sin) > 1.000001) {
-          throw new Error(`|sin| должен быть ≤ 1 (получено ${sin.toFixed(6)})`);
-        }
-        sin = Math.max(-1, Math.min(1, sin));
-        const cos2 = 1 - sin*sin;
-        if (cos2 < 0) throw new Error('cos² < 0');
-        cos = Math.sqrt(cos2) * signs.cos;
+        const cos2 = 1 - sin * sin;
+        cos = Math.sqrt(Math.abs(cos2)) * signs.cos;
         tan = (Math.abs(cos) < eps) ? (sin >= 0 ? Infinity : -Infinity) : sin / cos;
         cot = (Math.abs(sin) < eps) ? (cos >= 0 ? Infinity : -Infinity) : cos / sin;
+        
       } else if (knownFunc === 'cos') {
-        cos = numVal;
-        if (Math.abs(cos) > 1.000001) {
-          throw new Error(`|cos| должен быть ≤ 1 (получено ${cos.toFixed(6)})`);
+        if (Math.abs(numVal) > 1) {
+          if (Math.abs(numVal) > 1.000001) {
+            throw new Error(`|cos α| должен быть ≤ 1 (получено ${numVal.toFixed(6)})`);
+          }
+          numVal = Math.sign(numVal) * 1;
         }
-        cos = Math.max(-1, Math.min(1, cos));
-        const sin2 = 1 - cos*cos;
-        if (sin2 < 0) throw new Error('sin² < 0');
-        sin = Math.sqrt(sin2) * signs.sin;
+        cos = numVal;
+        const sin2 = 1 - cos * cos;
+        sin = Math.sqrt(Math.abs(sin2)) * signs.sin;
         tan = (Math.abs(cos) < eps) ? (sin >= 0 ? Infinity : -Infinity) : sin / cos;
         cot = (Math.abs(sin) < eps) ? (cos >= 0 ? Infinity : -Infinity) : cos / sin;
+        
       } else if (knownFunc === 'tan') {
         tan = numVal;
-        if (!isFinite(tan)) throw new Error('tg должен быть числом');
-        const tan2 = tan*tan;
-        const cos2 = 1/(1+tan2);
+        if (!isFinite(tan)) throw new Error('tg α должен быть числом');
+        const tan2 = tan * tan;
+        const cos2 = 1 / (1 + tan2);
         cos = Math.sqrt(cos2) * signs.cos;
         sin = tan * cos;
-        if (Math.abs(sin) > 1) sin = Math.sign(sin);
-        cot = (Math.abs(tan) < eps) ? (cos >= 0 ? Infinity : -Infinity) : 1/tan;
-      } else {
+        cot = (Math.abs(tan) < eps) ? (cos >= 0 ? Infinity : -Infinity) : 1 / tan;
+        
+      } else { // cot
         cot = numVal;
-        if (!isFinite(cot)) throw new Error('ctg должен быть числом');
+        if (!isFinite(cot)) throw new Error('ctg α должен быть числом');
         if (Math.abs(cot) < eps) {
           tan = (cot >= 0) ? Infinity : -Infinity;
         } else {
-          tan = 1/cot;
+          tan = 1 / cot;
         }
-        const cot2 = cot*cot;
-        const sin2 = 1/(1+cot2);
+        const cot2 = cot * cot;
+        const sin2 = 1 / (1 + cot2);
         sin = Math.sqrt(sin2) * signs.sin;
         cos = sin * cot;
-        if (Math.abs(cos) > 1) cos = Math.sign(cos);
       }
       
       return { sin, cos, tan, cot };
@@ -721,7 +754,7 @@
       piActive = false;
       piToggle.classList.remove('active');
       
-      // Установим пример для демонстрации: √3 · 1/2
+      // Установим пример: √3 · 1/2
       sqrtInput.value = '3';
       fractionInput.value = '1/2';
       
@@ -731,4 +764,3 @@
 </script>
 </body>
 </html>
-
