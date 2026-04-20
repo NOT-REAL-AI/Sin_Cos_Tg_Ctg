@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>АУРА · ТРИГОНОМЕТРИЯ · УГЛЫ С π</title>
+  <title>АУРА · ТРИГОНОМЕТРИЯ · ТРИ СЕГМЕНТА</title>
   <style>
     * {
       margin: 0;
@@ -65,7 +65,7 @@
     .calculator {
       position: relative;
       z-index: 10;
-      max-width: 900px;
+      max-width: 950px;
       width: 100%;
       background: rgba(255, 255, 255, 0.75);
       backdrop-filter: blur(20px) saturate(180%);
@@ -87,7 +87,7 @@
     }
 
     .glow-title {
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       font-weight: 800;
       letter-spacing: 5px;
       text-transform: uppercase;
@@ -116,12 +116,13 @@
       justify-content: center;
       gap: 20px;
       margin-bottom: 28px;
+      flex-wrap: wrap;
     }
 
     .mode-btn {
       padding: 12px 30px;
       border-radius: 40px;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
       border: 2px solid #4da6ff;
       background: rgba(255, 255, 255, 0.6);
@@ -162,7 +163,7 @@
       text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
     }
 
-    .neo-select, .neo-input {
+    .neo-select {
       width: 100%;
       background: rgba(255, 255, 255, 0.9);
       border: 2px solid #4da6ff;
@@ -178,102 +179,144 @@
       cursor: pointer;
     }
 
-    .neo-input {
-      cursor: text;
-    }
-
     .neo-select option {
       background: #ffffff;
       color: #003366;
       font-weight: 500;
     }
 
-    .neo-select:hover, .neo-input:hover {
+    .neo-select:hover {
       border-color: #0080ff;
       box-shadow: 0 0 20px #66b3ff, 0 4px 12px rgba(0, 100, 200, 0.3);
     }
 
-    .neo-select:focus, .neo-input:focus {
-      border-color: #0066cc;
-      box-shadow: 0 0 30px #99ccff, 0 0 15px rgba(255, 255, 255, 0.8) inset;
-    }
-
-    .value-constructor {
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 48px;
-      padding: 20px 18px;
-      margin-bottom: 20px;
-      border: 2px solid rgba(77, 166, 255, 0.5);
-      box-shadow: 0 8px 20px rgba(0, 100, 200, 0.15);
-    }
-
-    .expression-builder {
+    /* ТРИ СЕГМЕНТА ВВОДА */
+    .three-segments {
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
-      gap: 10px 15px;
+      gap: 15px;
+      margin-bottom: 20px;
     }
 
-    .expr-part {
+    .segment {
+      flex: 1 1 180px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 30px;
+      padding: 18px 15px;
+      border: 2px solid rgba(77, 166, 255, 0.4);
+      backdrop-filter: blur(8px);
+      transition: all 0.2s;
+    }
+
+    .segment:hover {
+      border-color: #4da6ff;
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 4px 15px rgba(0, 100, 200, 0.15);
+    }
+
+    .segment-title {
+      text-align: center;
+      color: #0059b3;
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    }
+
+    .segment-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .input-row {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.8);
-      padding: 5px 15px;
-      border-radius: 40px;
-      border: 2px solid #66b3ff;
-      box-shadow: 0 2px 8px rgba(0, 100, 200, 0.1);
     }
 
-    .expr-input {
-      width: 100px;
-      background: transparent;
-      border: none;
-      padding: 10px 5px;
-      font-size: 1.3rem;
+    .segment-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid #80b3ff;
+      border-radius: 30px;
+      padding: 12px 15px;
+      font-size: 1.2rem;
+      font-weight: 600;
       color: #003366;
       text-align: center;
       outline: none;
-      font-weight: 600;
+      transition: all 0.2s;
     }
 
-    .expr-input::placeholder {
-      color: #80b3ff;
-      font-size: 1rem;
+    .segment-input:focus {
+      border-color: #0066cc;
+      box-shadow: 0 0 15px #99ccff;
     }
 
-    .expr-label {
-      color: #0059b3;
-      font-size: 1.4rem;
-      font-weight: 600;
-    }
-
-    .pi-btn {
-      background: #4da6ff;
-      border: 2px solid #ffffff;
-      color: white;
-      padding: 12px 22px;
-      border-radius: 40px;
-      font-size: 1.4rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.15s;
-      box-shadow: 0 4px 12px rgba(0, 100, 200, 0.3);
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    .pi-btn.active {
-      background: #0066cc;
-      border-color: #ffffff;
-      box-shadow: 0 0 25px #66b3ff, 0 4px 12px rgba(0, 100, 200, 0.4);
-    }
-
-    .help-text {
-      margin-top: 12px;
-      color: #004c99;
+    .segment-input::placeholder {
+      color: #a0c4e8;
       font-size: 0.9rem;
-      font-weight: 500;
-      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    }
+
+    .sqrt-symbol {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #0059b3;
+    }
+
+    .pi-checkbox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .pi-checkbox label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #0059b3;
+    }
+
+    .pi-checkbox input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      accent-color: #0066cc;
+    }
+
+    .degree-presets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .preset-btn {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1.5px solid #66b3ff;
+      border-radius: 20px;
+      padding: 8px 5px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #004c99;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+    }
+
+    .preset-btn:hover {
+      background: #4da6ff;
+      color: white;
+      border-color: #ffffff;
     }
 
     .quarter-section {
@@ -322,11 +365,6 @@
       color: white;
       transform: scale(1.02);
       text-shadow: 0 0 20px white;
-    }
-
-    .quarter-btn:hover {
-      background: #99ccff;
-      border-color: #4da6ff;
     }
 
     .calc-btn {
@@ -438,20 +476,28 @@
       letter-spacing: 6px;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
+
+    .divider {
+      text-align: center;
+      color: #4da6ff;
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin: 5px 0;
+    }
   </style>
 </head>
 <body>
 
 <div class="calculator">
   <div class="title-block">
-    <div class="glow-title">⚡ АУРА · ТОЧНОСТЬ ⚡</div>
-    <div class="subaura">тригонометрия с углами</div>
+    <div class="glow-title">⚡ АУРА · ТРИГОНОМЕТРИЯ ⚡</div>
+    <div class="subaura">три сегмента точности</div>
   </div>
 
-  <!-- Переключатель режима: значение функции или угол -->
+  <!-- Переключатель режима -->
   <div class="mode-selector">
     <button class="mode-btn active" data-mode="value">📐 ЗНАЮ ФУНКЦИЮ</button>
-    <button class="mode-btn" data-mode="angle">📏 ЗНАЮ УГОЛ (рад)</button>
+    <button class="mode-btn" data-mode="angle">📏 ЗНАЮ УГОЛ</button>
   </div>
 
   <div class="selector-group" id="functionSelectGroup">
@@ -466,26 +512,61 @@
     </div>
   </div>
 
-  <!-- Ввод значения/угла -->
-  <div class="value-constructor">
-    <div class="label-icon" id="inputLabel">💎 ЗНАЧЕНИЕ ФУНКЦИИ</div>
-    <div class="expression-builder">
-      <div class="expr-part">
-        <span class="expr-label">√</span>
-        <input type="text" id="sqrtInput" class="expr-input" placeholder="число" value="">
+  <!-- ТРИ СЕГМЕНТА ВВОДА -->
+  <div style="margin-bottom: 10px;">
+    <div class="label-icon">💎 КОНСТРУКТОР ЗНАЧЕНИЯ / УГЛА</div>
+  </div>
+  
+  <div class="three-segments">
+    <!-- СЕГМЕНТ 1: КОРЕНЬ И МНОЖИТЕЛЬ -->
+    <div class="segment">
+      <div class="segment-title">🔢 КОРЕНЬ & МНОЖ.</div>
+      <div class="segment-content">
+        <div class="input-row">
+          <span class="sqrt-symbol">√</span>
+          <input type="text" id="sqrtInput" class="segment-input" placeholder="число" value="">
+        </div>
+        <div class="divider">×</div>
+        <input type="text" id="multiplierInput" class="segment-input" placeholder="a/b или число" value="1">
       </div>
-      <span style="color:#0059b3; font-size:1.8rem;">·</span>
-      <div class="expr-part">
-        <input type="text" id="fractionInput" class="expr-input" placeholder="a/b или число" value="1" style="width:120px;">
-      </div>
-      <div class="pi-btn" id="piToggle">π</div>
     </div>
-    <div class="help-text" id="helpText">
-      ✦ Примеры: √3 · 1/2 · π  |  √2 · 5/6  |  3/4 · π  |  просто 0.5 ✦
+
+    <!-- СЕГМЕНТ 2: ЧИСЛО π -->
+    <div class="segment">
+      <div class="segment-title">🥧 ЧИСЛО π</div>
+      <div class="segment-content">
+        <div class="pi-checkbox">
+          <label>
+            <input type="checkbox" id="piCheckbox"> 
+            <span style="font-size: 2.5rem; font-weight: 700;">π</span>
+          </label>
+        </div>
+        <div class="divider" style="margin-top: 15px;">×</div>
+        <div style="text-align: center; color: #0059b3; margin-top: 10px;">
+          <span style="font-size: 0.9rem;">множитель π</span><br>
+          <input type="text" id="piMultiplierInput" class="segment-input" placeholder="коэфф." value="1" style="width: 80%; margin-top: 5px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- СЕГМЕНТ 3: ГРАДУСЫ -->
+    <div class="segment">
+      <div class="segment-title">📐 ГРАДУСЫ</div>
+      <div class="segment-content">
+        <input type="text" id="degreesInput" class="segment-input" placeholder="например 60" value="">
+        <div class="degree-presets">
+          <button class="preset-btn" data-degrees="30">30°</button>
+          <button class="preset-btn" data-degrees="45">45°</button>
+          <button class="preset-btn" data-degrees="60">60°</button>
+          <button class="preset-btn" data-degrees="90">90°</button>
+          <button class="preset-btn" data-degrees="180">180°</button>
+          <button class="preset-btn" data-degrees="270">270°</button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- ЧЕТВЕРТЬ (только для режима "знаю функцию") -->
+  <!-- ЧЕТВЕРТЬ (только для режима функции) -->
   <div class="quarter-section" id="quarterSection">
     <div class="quarter-title">
       <span>🧿 ЧЕТВЕРТЬ УГЛА α</span>
@@ -511,27 +592,27 @@
       <div class="result-item"><span class="func-name">ctg α</span><span class="func-value" id="resCot">—</span></div>
     </div>
     <div id="errorMsg" class="error-message"></div>
-    <div class="info-note">✦ точные дроби, корни и π ✦</div>
+    <div class="info-note">✦ корни · π · градусы ✦</div>
   </div>
 
-  <div class="signature">АУРА · СИМВОЛЬНЫЙ РАСЧЁТ</div>
+  <div class="signature">АУРА · ТРИ СЕГМЕНТА</div>
 </div>
 
 <script>
   (function(){
     "use strict";
 
-    // Режимы
     const modeBtns = document.querySelectorAll('.mode-btn');
     const functionSelectGroup = document.getElementById('functionSelectGroup');
     const quarterSection = document.getElementById('quarterSection');
-    const inputLabel = document.getElementById('inputLabel');
-    const helpText = document.getElementById('helpText');
     
     const funcSelect = document.getElementById('funcSelect');
     const sqrtInput = document.getElementById('sqrtInput');
-    const fractionInput = document.getElementById('fractionInput');
-    const piToggle = document.getElementById('piToggle');
+    const multiplierInput = document.getElementById('multiplierInput');
+    const piCheckbox = document.getElementById('piCheckbox');
+    const piMultiplierInput = document.getElementById('piMultiplierInput');
+    const degreesInput = document.getElementById('degreesInput');
+    
     const quarterBtns = document.querySelectorAll('.quarter-btn');
     const calcBtn = document.getElementById('calculateBtn');
 
@@ -542,9 +623,8 @@
     const angleDisplay = document.getElementById('angleDisplay');
     const errorMsgDiv = document.getElementById('errorMsg');
 
-    let currentMode = 'value'; // 'value' или 'angle'
+    let currentMode = 'value';
     let currentQuarter = 1;
-    let piActive = false;
 
     // Переключение режима
     modeBtns.forEach(btn => {
@@ -556,21 +636,18 @@
         if (currentMode === 'value') {
           functionSelectGroup.style.display = 'block';
           quarterSection.style.display = 'block';
-          inputLabel.textContent = '💎 ЗНАЧЕНИЕ ФУНКЦИИ';
-          helpText.innerHTML = '✦ Примеры: √3 · 1/2 · π  |  √2 · 5/6  |  3/4 · π  |  просто 0.5 ✦';
         } else {
           functionSelectGroup.style.display = 'none';
           quarterSection.style.display = 'none';
-          inputLabel.textContent = '📏 УГОЛ α (в радианах)';
-          helpText.innerHTML = '✦ Угол может быть любым: π/2, 2π, √2·π, 5/6·π ✦';
         }
       });
     });
 
-    // Переключение π
-    piToggle.addEventListener('click', () => {
-      piActive = !piActive;
-      piToggle.classList.toggle('active', piActive);
+    // Пресеты градусов
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        degreesInput.value = btn.dataset.degrees;
+      });
     });
 
     function setActiveQuarter(quarter) {
@@ -612,72 +689,41 @@
       }
     }
 
-    // Получение числового значения (угол или значение функции)
+    // Получение итогового значения из трёх сегментов
     function getNumericValue() {
+      // Сегмент 1: корень и множитель
       let sqrtStr = sqrtInput.value.trim();
       let sqrtNum = null;
       if (sqrtStr !== '') {
         sqrtNum = parseFloat(sqrtStr);
-        if (isNaN(sqrtNum) || sqrtNum < 0) throw new Error('Под корнем должно быть неотрицательное число');
+        if (isNaN(sqrtNum) || sqrtNum < 0) throw new Error('Под корнем ≥ 0');
       }
       
-      let fracStr = fractionInput.value.trim();
-      if (fracStr === '') fracStr = '1';
+      let multStr = multiplierInput.value.trim();
+      if (multStr === '') multStr = '1';
+      let multiplier = parseFraction(multStr);
       
-      let coeff = parseFraction(fracStr);
-      
-      let numericValue = coeff;
+      let value = multiplier;
       if (sqrtNum !== null) {
-        numericValue = numericValue * Math.sqrt(sqrtNum);
-      }
-      if (piActive) {
-        numericValue = numericValue * Math.PI;
+        value *= Math.sqrt(sqrtNum);
       }
       
-      return numericValue;
-    }
-
-    // Получение структуры для символьного отображения
-    function getSymbolicStructure() {
-      let sqrtStr = sqrtInput.value.trim();
-      let sqrtNum = null;
-      if (sqrtStr !== '') {
-        sqrtNum = parseFloat(sqrtStr);
-        if (isNaN(sqrtNum) || sqrtNum < 0) throw new Error('Под корнем должно быть неотрицательное число');
+      // Сегмент 2: π
+      if (piCheckbox.checked) {
+        let piMultStr = piMultiplierInput.value.trim();
+        if (piMultStr === '') piMultStr = '1';
+        let piMultiplier = parseFraction(piMultStr);
+        value *= piMultiplier * Math.PI;
       }
       
-      let fracStr = fractionInput.value.trim();
-      if (fracStr === '') fracStr = '1';
-      
-      let coeff = parseFraction(fracStr);
-      
-      let numericValue = coeff;
-      if (sqrtNum !== null) {
-        numericValue = numericValue * Math.sqrt(sqrtNum);
-      }
-      if (piActive) {
-        numericValue = numericValue * Math.PI;
+      // Сегмент 3: градусы (конвертируем в радианы)
+      let degStr = degreesInput.value.trim();
+      if (degStr !== '') {
+        let degrees = parseFraction(degStr);
+        value = degrees * Math.PI / 180;
       }
       
-      return { numericValue, sqrtNum, fractionDisplay: fracStr, hasPi: piActive, coeff };
-    }
-
-    // Форматирование угла для отображения
-    function formatAngle(angle, sqrtNum, fractionDisplay, hasPi) {
-      // Если это был угол с π, показываем красиво
-      if (hasPi) {
-        let coeff = angle / Math.PI;
-        let fracStr = toFractionString(coeff);
-        let parts = [];
-        if (sqrtNum !== null) {
-          parts.push(`√${formatSqrt(sqrtNum)}`);
-        }
-        parts.push(fracStr);
-        parts.push('π');
-        return parts.join('·');
-      } else {
-        return angle.toFixed(4);
-      }
+      return value;
     }
 
     function toFractionString(x, maxDen = 100) {
@@ -707,7 +753,7 @@
       return `${sign * bestNum}/${bestDen}`;
     }
 
-    function formatExact(num, sqrtNum, fractionDisplay, hasPi) {
+    function formatExact(num) {
       if (num === null || !isFinite(num)) {
         if (num === Infinity) return '∞';
         if (num === -Infinity) return '-∞';
@@ -718,7 +764,7 @@
       const absNum = Math.abs(num);
       if (absNum < 1e-12) return '0';
       
-      // Для точных значений
+      // Точные значения
       const exactValues = {
         0: '0',
         0.5: '1/2',
@@ -726,45 +772,22 @@
         [Math.sqrt(3)/2]: '√3/2',
         1: '1',
         [Math.sqrt(3)]: '√3',
-        [1/Math.sqrt(3)]: '1/√3'
+        [1/Math.sqrt(3)]: '1/√3',
+        [Math.sqrt(2)]: '√2',
+        [1/Math.sqrt(2)]: '1/√2'
       };
       
-      // Проверяем известные точные значения
       for (let [val, str] of Object.entries(exactValues)) {
         if (Math.abs(absNum - parseFloat(val)) < 1e-10) {
           return (sign === -1 ? '-' : '') + str;
         }
       }
       
-      // Если нет точного совпадения, форматируем как обычно
+      // Для углов с π
       let rational = absNum;
-      let hasSqrt = (sqrtNum !== null);
+      if (Math.abs(rational - Math.PI) < 1e-10) return sign === -1 ? '-π' : 'π';
       
-      if (hasPi) rational /= Math.PI;
-      if (hasSqrt) rational /= Math.sqrt(sqrtNum);
-      
-      let fracPart = toFractionString(rational);
-      
-      let parts = [];
-      if (fracPart !== '1' || (!hasSqrt && !hasPi)) {
-        parts.push(fracPart);
-      }
-      if (hasSqrt) {
-        parts.push(`√${formatSqrt(sqrtNum)}`);
-      }
-      if (hasPi) {
-        parts.push('π');
-      }
-      
-      let result = parts.join('·');
-      if (result === '') result = '1';
-      return (sign === -1 ? '-' : '') + result;
-    }
-
-    function formatSqrt(n) {
-      if (n === null) return '';
-      if (Number.isInteger(n)) return n.toString();
-      return n.toFixed(4).replace(/\.?0+$/, '');
+      return (sign === -1 ? '-' : '') + absNum.toFixed(6).replace(/\.?0+$/, '');
     }
 
     function getSigns(q) {
@@ -774,7 +797,6 @@
       return { sin: -1, cos: 1, tan: -1, cot: -1 };
     }
 
-    // Вычисление функций по углу
     function computeFromAngle(angle) {
       const sin = Math.sin(angle);
       const cos = Math.cos(angle);
@@ -784,7 +806,6 @@
       return { sin, cos, tan, cot };
     }
 
-    // Вычисление функций по значению одной функции
     function computeFromValue(knownFunc, numVal, quarter) {
       const signs = getSigns(quarter);
       const eps = 1e-10;
@@ -792,7 +813,7 @@
       
       if (knownFunc === 'sin') {
         if (Math.abs(numVal) > 1.000001) {
-          throw new Error(`|sin α| должен быть ≤ 1 (получено ${numVal.toFixed(6)})`);
+          throw new Error(`|sin α| ≤ 1 (получено ${numVal.toFixed(6)})`);
         }
         sin = Math.max(-1, Math.min(1, numVal));
         const cos2 = 1 - sin * sin;
@@ -802,7 +823,7 @@
         
       } else if (knownFunc === 'cos') {
         if (Math.abs(numVal) > 1.000001) {
-          throw new Error(`|cos α| должен быть ≤ 1 (получено ${numVal.toFixed(6)})`);
+          throw new Error(`|cos α| ≤ 1 (получено ${numVal.toFixed(6)})`);
         }
         cos = Math.max(-1, Math.min(1, numVal));
         const sin2 = 1 - cos * cos;
@@ -819,7 +840,7 @@
         sin = tan * cos;
         cot = (Math.abs(tan) < eps) ? (cos >= 0 ? Infinity : -Infinity) : 1 / tan;
         
-      } else { // cot
+      } else {
         cot = numVal;
         if (!isFinite(cot)) throw new Error('ctg α должен быть числом');
         if (Math.abs(cot) < eps) {
@@ -840,37 +861,38 @@
       errorMsgDiv.textContent = '';
       
       try {
-        const parsed = getSymbolicStructure();
+        const value = getNumericValue();
         let results;
         
-        if (currentMode === 'angle') {
-          // Режим угла
-          const angle = parsed.numericValue;
-          results = computeFromAngle(angle);
+        if (currentMode === 'angle' || degreesInput.value.trim() !== '') {
+          // Если есть градусы или режим угла — считаем от угла
+          results = computeFromAngle(value);
           
-          // Показываем угол
-          const angleStr = formatAngle(angle, parsed.sqrtNum, parsed.fractionDisplay, parsed.hasPi);
-          angleDisplay.textContent = `∠ α = ${angleStr} рад`;
+          let angleStr = '';
+          if (degreesInput.value.trim() !== '') {
+            angleStr = `${degreesInput.value}° = ${(value * 180 / Math.PI).toFixed(2)}°`;
+          } else {
+            angleStr = `${value.toFixed(4)} рад`;
+          }
+          angleDisplay.textContent = `∠ α = ${angleStr}`;
           angleDisplay.style.display = 'block';
           
         } else {
           // Режим значения функции
-          results = computeFromValue(funcSelect.value, parsed.numericValue, currentQuarter);
+          results = computeFromValue(funcSelect.value, value, currentQuarter);
           angleDisplay.style.display = 'none';
         }
         
-        // Форматируем результаты
-        resSin.textContent = formatExact(results.sin, parsed.sqrtNum, parsed.fractionDisplay, parsed.hasPi);
-        resCos.textContent = formatExact(results.cos, parsed.sqrtNum, parsed.fractionDisplay, parsed.hasPi);
+        resSin.textContent = formatExact(results.sin);
+        resCos.textContent = formatExact(results.cos);
         
-        // Для тангенса и котангенса специальная обработка бесконечностей
         if (results.tan === Infinity) resTan.textContent = '∞';
         else if (results.tan === -Infinity) resTan.textContent = '-∞';
-        else resTan.textContent = formatExact(results.tan, parsed.sqrtNum, parsed.fractionDisplay, parsed.hasPi);
+        else resTan.textContent = formatExact(results.tan);
         
         if (results.cot === Infinity) resCot.textContent = '∞';
         else if (results.cot === -Infinity) resCot.textContent = '-∞';
-        else resCot.textContent = formatExact(results.cot, parsed.sqrtNum, parsed.fractionDisplay, parsed.hasPi);
+        else resCot.textContent = formatExact(results.cot);
         
       } catch (e) {
         errorMsgDiv.textContent = e.message;
@@ -880,7 +902,9 @@
     }
 
     calcBtn.addEventListener('click', onCalculate);
-    [sqrtInput, fractionInput].forEach(i => {
+    
+    // Enter в полях
+    [sqrtInput, multiplierInput, piMultiplierInput, degreesInput].forEach(i => {
       i.addEventListener('keypress', e => { 
         if(e.key === 'Enter') onCalculate(); 
       });
@@ -888,24 +912,6 @@
     
     window.addEventListener('DOMContentLoaded', () => {
       setActiveQuarter(1);
-      piActive = false;
-      piToggle.classList.remove('active');
-      
-      // Пример: π/2
-      sqrtInput.value = '';
-      fractionInput.value = '1/2';
-      piActive = true;
-      piToggle.classList.add('active');
-      
-      // Переключаем в режим угла для демонстрации
-      currentMode = 'angle';
-      modeBtns.forEach(b => b.classList.remove('active'));
-      modeBtns[1].classList.add('active');
-      functionSelectGroup.style.display = 'none';
-      quarterSection.style.display = 'none';
-      inputLabel.textContent = '📏 УГОЛ α (в радианах)';
-      helpText.innerHTML = '✦ Угол может быть любым: π/2, 2π, √2·π, 5/6·π ✦';
-      
       onCalculate();
     });
   })();
